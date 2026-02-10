@@ -1,7 +1,8 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { FileText } from "lucide-react";
 
 const NAV_LINKS = [
     { label: "Home", href: "#hero" },
@@ -11,24 +12,58 @@ const NAV_LINKS = [
     { label: "Contact", href: "#contact" },
 ];
 
+const SECTION_IDS = NAV_LINKS.map((l) => l.href.replace("#", ""));
+
 export default function Navbar() {
     const [scrolled, setScrolled] = useState(false);
     const [mobileOpen, setMobileOpen] = useState(false);
-    const [activeLink, setActiveLink] = useState("#hero");
+    const [activeSection, setActiveSection] = useState("hero");
 
+    /* ── Scroll-aware background ── */
     useEffect(() => {
         const onScroll = () => setScrolled(window.scrollY > 20);
         window.addEventListener("scroll", onScroll, { passive: true });
         return () => window.removeEventListener("scroll", onScroll);
     }, []);
 
-    // Close mobile menu on resize
+    /* ── Active section via IntersectionObserver ── */
+    useEffect(() => {
+        const observers: IntersectionObserver[] = [];
+
+        SECTION_IDS.forEach((id) => {
+            const el = document.getElementById(id);
+            if (!el) return;
+
+            const observer = new IntersectionObserver(
+                ([entry]) => {
+                    if (entry.isIntersecting) {
+                        setActiveSection(id);
+                    }
+                },
+                {
+                    rootMargin: "-40% 0px -55% 0px",
+                    threshold: 0,
+                }
+            );
+            observer.observe(el);
+            observers.push(observer);
+        });
+
+        return () => observers.forEach((o) => o.disconnect());
+    }, []);
+
+    /* ── Close mobile on resize ── */
     useEffect(() => {
         const onResize = () => {
             if (window.innerWidth >= 768) setMobileOpen(false);
         };
         window.addEventListener("resize", onResize);
         return () => window.removeEventListener("resize", onResize);
+    }, []);
+
+    const handleNavClick = useCallback((href: string) => {
+        setActiveSection(href.replace("#", ""));
+        setMobileOpen(false);
     }, []);
 
     return (
@@ -42,12 +77,12 @@ export default function Navbar() {
                         : "bg-transparent"
                     }`}
             >
-                <nav className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6 lg:px-8">
+                <nav className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6 lg:px-8">
                     {/* Logo */}
                     <a
                         href="#hero"
                         className="relative text-xl font-bold tracking-tight"
-                        onClick={() => setActiveLink("#hero")}
+                        onClick={() => handleNavClick("#hero")}
                     >
                         <span className="gradient-text">Md Ruman</span>
                         <span className="text-white/60">.</span>
@@ -60,8 +95,8 @@ export default function Navbar() {
                                 key={link.href}
                                 href={link.href}
                                 label={link.label}
-                                isActive={activeLink === link.href}
-                                onClick={() => setActiveLink(link.href)}
+                                isActive={activeSection === link.href.replace("#", "")}
+                                onClick={() => handleNavClick(link.href)}
                             />
                         ))}
 
@@ -69,8 +104,9 @@ export default function Navbar() {
                         <a
                             href="/resume.pdf"
                             download
-                            className="btn-glow ml-4 inline-flex h-9 items-center rounded-lg bg-gradient-to-r from-indigo-500 to-violet-500 px-5 text-sm font-medium text-white transition-all hover:shadow-lg hover:shadow-indigo-500/25"
+                            className="btn-glow ml-4 inline-flex h-9 items-center gap-2 rounded-lg bg-gradient-to-r from-indigo-500 to-violet-500 px-5 text-sm font-medium text-white transition-all hover:shadow-lg hover:shadow-indigo-500/25"
                         >
+                            <FileText className="h-3.5 w-3.5" />
                             Resume
                         </a>
                     </div>
@@ -129,11 +165,8 @@ export default function Navbar() {
                                 initial={{ opacity: 0, x: 40 }}
                                 animate={{ opacity: 1, x: 0 }}
                                 transition={{ delay: i * 0.06, duration: 0.3 }}
-                                onClick={() => {
-                                    setMobileOpen(false);
-                                    setActiveLink(link.href);
-                                }}
-                                className={`rounded-xl px-4 py-3 text-lg font-medium transition-colors ${activeLink === link.href
+                                onClick={() => handleNavClick(link.href)}
+                                className={`rounded-xl px-4 py-3 text-lg font-medium transition-colors ${activeSection === link.href.replace("#", "")
                                         ? "bg-white/5 text-white"
                                         : "text-gray-400 hover:bg-white/5 hover:text-white"
                                     }`}
@@ -145,8 +178,9 @@ export default function Navbar() {
                             href="/resume.pdf"
                             download
                             onClick={() => setMobileOpen(false)}
-                            className="mt-4 inline-flex h-12 items-center justify-center rounded-xl bg-gradient-to-r from-indigo-500 to-violet-500 text-base font-medium text-white"
+                            className="mt-4 inline-flex h-12 items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-indigo-500 to-violet-500 text-base font-medium text-white"
                         >
+                            <FileText className="h-4 w-4" />
                             Download Resume
                         </a>
                     </motion.div>
