@@ -1,120 +1,310 @@
-import Image from "next/image";
+"use client";
 
-/* ───────────────────────────────────────────────────────────────
-   Hero Section
-   A professional, clean, and minimal hero for a Full-Stack Developer portfolio.
-   - Semantic HTML structure
-   - Responsive layout (mobile-first)
-   - Neutral color palette for recruiter audiences
-─────────────────────────────────────────────────────────────── */
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
-interface HeroProps {
-    name?: string;
-    role?: string;
-    tagline?: string;
-    supportingText?: string;
-    profileImageSrc?: string;
-    resumeHref?: string;
-}
+/* ── Rotating Keywords ── */
+const ROTATING_WORDS = ["Scalable", "Performant", "Intelligent", "Beautiful"];
 
-export default function Hero({
-    name = "Md Ruman",
-    role = "Full-Stack Web Developer",
-    tagline = "I build scalable, production-ready web applications using modern frontend, backend, and cloud technologies.",
-    supportingText = "Currently working as a Full-Stack Developer at Incresco, contributing to real-world systems used by multiple institutions.",
-    profileImageSrc = "/profile-placeholder.svg",
-    resumeHref = "/resume.pdf",
-}: HeroProps) {
+/* ── Animation Variants ── */
+const containerVariants = {
+    hidden: {},
+    visible: {
+        transition: {
+            staggerChildren: 0.15,
+            delayChildren: 0.3,
+        },
+    },
+};
+
+const fadeUp = {
+    hidden: { opacity: 0, y: 24 },
+    visible: {
+        opacity: 1,
+        y: 0,
+        transition: { duration: 0.6, ease: "easeOut" as const },
+    },
+};
+
+const fadeUpSlow = {
+    hidden: { opacity: 0, y: 30 },
+    visible: {
+        opacity: 1,
+        y: 0,
+        transition: { duration: 0.8, ease: "easeOut" as const },
+    },
+};
+
+export default function Hero() {
+    const [wordIndex, setWordIndex] = useState(0);
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setWordIndex((prev) => (prev + 1) % ROTATING_WORDS.length);
+        }, 2500);
+        return () => clearInterval(interval);
+    }, []);
+
     return (
         <section
             id="hero"
             aria-label="Introduction"
-            className="relative flex min-h-screen w-full items-center justify-center bg-white px-6 py-20 dark:bg-zinc-950 sm:px-12 lg:px-24"
+            className="noise-overlay relative flex min-h-screen w-full items-center justify-center overflow-hidden px-6 sm:px-12 lg:px-24"
         >
-            <div className="mx-auto flex w-full max-w-5xl flex-col items-center gap-10 lg:flex-row lg:items-center lg:justify-between lg:gap-16">
-                {/* ───────────────── Text Content ───────────────── */}
-                <div className="flex flex-1 flex-col items-center text-center lg:items-start lg:text-left">
-                    {/* Name */}
-                    <h1 className="text-4xl font-bold tracking-tight text-zinc-900 dark:text-zinc-50 sm:text-5xl lg:text-6xl">
-                        {name}
-                    </h1>
+            {/* ── Background Gradient Mesh ── */}
+            <div className="pointer-events-none absolute inset-0 -z-10">
+                {/* Base gradient */}
+                <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_-20%,rgba(99,102,241,0.15),transparent)]" />
 
-                    {/* Role Badge */}
-                    <p className="mt-3 text-lg font-medium text-zinc-600 dark:text-zinc-400 sm:text-xl">
-                        {role}
-                    </p>
+                {/* Animated Blobs */}
+                <div className="animate-blob absolute -top-40 left-1/4 h-[500px] w-[500px] rounded-full bg-indigo-600/20 blur-[120px]" />
+                <div className="animate-blob-reverse absolute -bottom-40 right-1/4 h-[400px] w-[400px] rounded-full bg-violet-600/15 blur-[120px]" />
+                <div className="animate-blob absolute right-1/3 top-1/3 h-[300px] w-[300px] rounded-full bg-cyan-500/10 blur-[100px]" />
 
-                    {/* Primary Tagline */}
-                    <p className="mt-6 max-w-xl text-base leading-relaxed text-zinc-700 dark:text-zinc-300 sm:text-lg">
-                        {tagline}
-                    </p>
+                {/* Grid pattern */}
+                <div
+                    className="absolute inset-0 opacity-[0.02]"
+                    style={{
+                        backgroundImage:
+                            "linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)",
+                        backgroundSize: "60px 60px",
+                    }}
+                />
+            </div>
 
-                    {/* Supporting Line */}
-                    <p className="mt-4 max-w-xl text-sm leading-relaxed text-zinc-500 dark:text-zinc-400 sm:text-base">
-                        {supportingText}
-                    </p>
+            {/* ── Main Content ── */}
+            <div className="mx-auto flex w-full max-w-7xl flex-col items-center gap-16 pt-20 lg:flex-row lg:items-center lg:gap-20">
+                {/* ── Left Column: Text ── */}
+                <motion.div
+                    variants={containerVariants}
+                    initial="hidden"
+                    animate="visible"
+                    className="flex flex-1 flex-col items-center text-center lg:items-start lg:text-left"
+                >
+                    {/* Badge */}
+                    <motion.div variants={fadeUp}>
+                        <span className="animate-reveal inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-4 py-1.5 font-[family-name:var(--font-mono)] text-xs font-medium tracking-wide text-indigo-300">
+                            <span className="inline-block h-1.5 w-1.5 rounded-full bg-indigo-400 animate-glow-pulse" />
+                            Full-Stack Developer
+                        </span>
+                    </motion.div>
 
-                    {/* Call-to-Action Buttons */}
-                    <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:gap-4">
-                        <a
+                    {/* Headline */}
+                    <motion.h1
+                        variants={fadeUp}
+                        className="mt-8 text-4xl font-bold leading-[1.1] tracking-tight text-white sm:text-5xl lg:text-6xl xl:text-7xl"
+                    >
+                        Building{" "}
+                        <span className="relative inline-block">
+                            <AnimatePresence mode="wait">
+                                <motion.span
+                                    key={ROTATING_WORDS[wordIndex]}
+                                    initial={{ opacity: 0, y: 16, filter: "blur(4px)" }}
+                                    animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                                    exit={{ opacity: 0, y: -16, filter: "blur(4px)" }}
+                                    transition={{ duration: 0.4, ease: "easeOut" }}
+                                    className="gradient-text inline-block"
+                                >
+                                    {ROTATING_WORDS[wordIndex]}
+                                </motion.span>
+                            </AnimatePresence>
+                        </span>
+                        <br />
+                        Web Experiences
+                    </motion.h1>
+
+                    {/* Description */}
+                    <motion.p
+                        variants={fadeUp}
+                        className="mt-6 max-w-lg text-base leading-relaxed text-gray-400 sm:text-lg"
+                    >
+                        I craft production-ready web applications using modern frontend,
+                        backend, and cloud technologies — delivering systems that scale.
+                    </motion.p>
+
+                    {/* Supporting text */}
+                    <motion.p
+                        variants={fadeUp}
+                        className="mt-3 max-w-lg text-sm leading-relaxed text-gray-500"
+                    >
+                        Currently contributing as a Full-Stack Developer at Incresco,
+                        building real-world systems used by multiple institutions.
+                    </motion.p>
+
+                    {/* CTA Buttons */}
+                    <motion.div
+                        variants={fadeUp}
+                        className="mt-10 flex flex-col gap-3 sm:flex-row sm:gap-4"
+                    >
+                        <motion.a
                             href="#experience"
-                            className="inline-flex h-11 items-center justify-center rounded-md bg-zinc-900 px-6 text-sm font-medium text-white transition-colors hover:bg-zinc-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2 dark:bg-zinc-50 dark:text-zinc-900 dark:hover:bg-zinc-200 dark:focus-visible:ring-zinc-50"
+                            whileHover={{ scale: 1.03 }}
+                            whileTap={{ scale: 0.97 }}
+                            className="btn-glow inline-flex h-12 items-center justify-center rounded-xl bg-gradient-to-r from-indigo-500 via-violet-500 to-indigo-600 px-8 text-sm font-semibold text-white shadow-lg shadow-indigo-500/20 transition-shadow hover:shadow-xl hover:shadow-indigo-500/30"
                         >
                             View Experience
-                        </a>
-                        <a
+                            <svg
+                                className="ml-2 h-4 w-4"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                                strokeWidth={2}
+                            >
+                                <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    d="M13 7l5 5m0 0l-5 5m5-5H6"
+                                />
+                            </svg>
+                        </motion.a>
+
+                        <motion.a
                             href="#projects"
-                            className="inline-flex h-11 items-center justify-center rounded-md border border-zinc-300 bg-transparent px-6 text-sm font-medium text-zinc-900 transition-colors hover:bg-zinc-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2 dark:border-zinc-700 dark:text-zinc-50 dark:hover:bg-zinc-800 dark:focus-visible:ring-zinc-50"
+                            whileHover={{ scale: 1.03 }}
+                            whileTap={{ scale: 0.97 }}
+                            className="inline-flex h-12 items-center justify-center rounded-xl border border-white/10 bg-white/[0.03] px-8 text-sm font-semibold text-gray-300 transition-all hover:border-white/20 hover:bg-white/[0.06] hover:text-white"
                         >
                             View Projects
-                        </a>
-                        <a
-                            href={resumeHref}
-                            download
-                            className="inline-flex h-11 items-center justify-center gap-2 rounded-md border border-zinc-300 bg-transparent px-6 text-sm font-medium text-zinc-900 transition-colors hover:bg-zinc-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2 dark:border-zinc-700 dark:text-zinc-50 dark:hover:bg-zinc-800 dark:focus-visible:ring-zinc-50"
-                        >
-                            <DownloadIcon />
-                            Download Resume
-                        </a>
-                    </div>
-                </div>
+                        </motion.a>
+                    </motion.div>
 
-                {/* ───────────────── Profile Image ───────────────── */}
-                <div className="relative shrink-0">
-                    <div className="relative h-56 w-56 overflow-hidden rounded-full border-4 border-zinc-200 bg-zinc-100 shadow-lg dark:border-zinc-800 dark:bg-zinc-900 sm:h-64 sm:w-64 lg:h-72 lg:w-72">
-                        <Image
-                            src={profileImageSrc}
-                            alt={`${name} — ${role}`}
-                            fill
-                            priority
-                            className="object-cover"
+                    {/* Stats / Social Proof */}
+                    <motion.div
+                        variants={fadeUp}
+                        className="mt-12 flex items-center gap-8 text-sm text-gray-500"
+                    >
+                        <div className="flex flex-col">
+                            <span className="text-xl font-bold text-white">2+</span>
+                            <span>Years Exp.</span>
+                        </div>
+                        <div className="h-8 w-px bg-white/10" />
+                        <div className="flex flex-col">
+                            <span className="text-xl font-bold text-white">10+</span>
+                            <span>Projects</span>
+                        </div>
+                        <div className="h-8 w-px bg-white/10" />
+                        <div className="flex flex-col">
+                            <span className="text-xl font-bold text-white">5+</span>
+                            <span>Technologies</span>
+                        </div>
+                    </motion.div>
+                </motion.div>
+
+                {/* ── Right Column: Abstract Visual ── */}
+                <motion.div
+                    variants={fadeUpSlow}
+                    initial="hidden"
+                    animate="visible"
+                    className="relative hidden flex-1 items-center justify-center lg:flex"
+                >
+                    {/* Outer ring */}
+                    <div className="relative flex h-[420px] w-[420px] items-center justify-center xl:h-[480px] xl:w-[480px]">
+                        {/* Rotating ring */}
+                        <div className="absolute inset-0 rounded-full border border-white/[0.06]" />
+                        <div
+                            className="absolute inset-4 rounded-full border border-white/[0.04]"
+                            style={{ animation: "spin 30s linear infinite" }}
+                        />
+                        <div className="absolute inset-8 rounded-full border border-dashed border-white/[0.05]" />
+
+                        {/* Central glow orb */}
+                        <div className="relative flex h-48 w-48 items-center justify-center xl:h-56 xl:w-56">
+                            <div className="absolute inset-0 rounded-full bg-gradient-to-br from-indigo-500/30 via-violet-500/20 to-cyan-500/10 blur-2xl animate-glow-pulse" />
+                            <div className="absolute inset-4 rounded-full bg-gradient-to-br from-indigo-600/20 to-violet-600/10 backdrop-blur-sm" />
+                            <div className="absolute inset-0 rounded-full border border-white/[0.08]" />
+
+                            {/* Code symbol */}
+                            <span className="relative font-[family-name:var(--font-mono)] text-3xl font-bold text-white/80 xl:text-4xl">
+                                {"</>"}
+                            </span>
+                        </div>
+
+                        {/* Floating nodes */}
+                        <FloatingNode
+                            label="React"
+                            position="top-4 left-1/2 -translate-x-1/2"
+                            delay={0}
+                        />
+                        <FloatingNode
+                            label="Node.js"
+                            position="bottom-4 left-1/2 -translate-x-1/2"
+                            delay={0.5}
+                        />
+                        <FloatingNode
+                            label="AWS"
+                            position="left-0 top-1/2 -translate-y-1/2"
+                            delay={1}
+                        />
+                        <FloatingNode
+                            label="TypeScript"
+                            position="right-0 top-1/2 -translate-y-1/2"
+                            delay={1.5}
+                        />
+
+                        {/* Corner accents */}
+                        <div className="absolute -right-2 top-1/4 h-2 w-2 rounded-full bg-indigo-400/60 animate-glow-pulse" />
+                        <div className="absolute -left-2 bottom-1/4 h-2 w-2 rounded-full bg-cyan-400/60 animate-glow-pulse" style={{ animationDelay: "1s" }} />
+                        <div className="absolute bottom-12 right-12 h-1.5 w-1.5 rounded-full bg-violet-400/60 animate-glow-pulse" style={{ animationDelay: "2s" }} />
+                    </div>
+                </motion.div>
+            </div>
+
+            {/* ── Scroll Indicator ── */}
+            <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 1.5, duration: 0.8 }}
+                className="absolute bottom-8 left-1/2 -translate-x-1/2"
+            >
+                <motion.div
+                    animate={{ y: [0, 8, 0] }}
+                    transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                    className="flex flex-col items-center gap-2"
+                >
+                    <span className="text-xs font-medium tracking-widest text-gray-500 uppercase">
+                        Scroll
+                    </span>
+                    <div className="flex h-8 w-5 items-start justify-center rounded-full border border-white/10 p-1">
+                        <motion.div
+                            animate={{ y: [0, 10, 0] }}
+                            transition={{
+                                duration: 2,
+                                repeat: Infinity,
+                                ease: "easeInOut",
+                            }}
+                            className="h-1.5 w-1 rounded-full bg-white/40"
                         />
                     </div>
-                    {/* Subtle decorative ring */}
-                    <div className="absolute -inset-3 -z-10 rounded-full border border-zinc-200/50 dark:border-zinc-800/50" />
-                </div>
-            </div>
+                </motion.div>
+            </motion.div>
         </section>
     );
 }
 
-/* ───────────────────────────────────────────────────────────────
-   Download Icon (inline SVG for simplicity)
-─────────────────────────────────────────────────────────────── */
-function DownloadIcon() {
+/* ── Floating Tech Node ── */
+function FloatingNode({
+    label,
+    position,
+    delay,
+}: {
+    label: string;
+    position: string;
+    delay: number;
+}) {
     return (
-        <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 20 20"
-            fill="currentColor"
-            className="h-4 w-4"
-            aria-hidden="true"
+        <motion.div
+            animate={{ y: [-4, 4, -4] }}
+            transition={{
+                duration: 3,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay,
+            }}
+            className={`absolute ${position}`}
         >
-            <path
-                fillRule="evenodd"
-                d="M10 3a.75.75 0 01.75.75v7.59l2.22-2.22a.75.75 0 111.06 1.06l-3.5 3.5a.75.75 0 01-1.06 0l-3.5-3.5a.75.75 0 111.06-1.06l2.22 2.22V3.75A.75.75 0 0110 3zM3.75 13a.75.75 0 01.75.75v1.5c0 .414.336.75.75.75h9.5a.75.75 0 00.75-.75v-1.5a.75.75 0 111.5 0v1.5a2.25 2.25 0 01-2.25 2.25h-9.5A2.25 2.25 0 013 15.25v-1.5a.75.75 0 01.75-.75z"
-                clipRule="evenodd"
-            />
-        </svg>
+            <div className="rounded-lg border border-white/10 bg-white/[0.03] px-3 py-1.5 text-xs font-medium text-gray-300 backdrop-blur-sm transition-colors hover:border-white/20 hover:text-white">
+                {label}
+            </div>
+        </motion.div>
     );
 }
