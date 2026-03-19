@@ -4,6 +4,7 @@ import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { Mail, Linkedin, Github, Send, ArrowRight } from "lucide-react";
 import InteractiveCard from "@/components/ui/InteractiveCard";
+import { SOCIAL_LINKS } from "@/constants/socialLinks";
 
 /* ── Contact Links ── */
 interface ContactLink {
@@ -16,19 +17,19 @@ interface ContactLink {
 const contactLinks: ContactLink[] = [
     {
         label: "Email",
-        href: "mailto:mdruman4094@gmail.com",
+        href: `mailto:${SOCIAL_LINKS.email}`,
         icon: <Mail className="h-5 w-5" />,
         description: "Drop me a line anytime",
     },
     {
         label: "LinkedIn",
-        href: "https://www.linkedin.com/in/md-ruman",
+        href: SOCIAL_LINKS.linkedin,
         icon: <Linkedin className="h-5 w-5" />,
         description: "Let's connect professionally",
     },
     {
         label: "GitHub",
-        href: "https://github.com/Ruman7860",
+        href: SOCIAL_LINKS.github,
         icon: <Github className="h-5 w-5" />,
         description: "Check out my code",
     },

@@ -1,5 +1,6 @@
 "use client";
 
+import { SOCIAL_LINKS } from "@/constants/socialLinks";
 import { motion } from "framer-motion";
 import { Github, Linkedin } from "lucide-react";
 
@@ -16,7 +17,7 @@ export default function Footer() {
 
     return (
         <footer
-            className="relative w-full border-t border-white/[0.06] px-6 py-10 sm:px-12 lg:px-24"
+            className="relative w-full border-t border-white/6 px-6 py-10 sm:px-12 lg:px-24"
             style={{ background: "#08080c" }}
         >
             <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-6 sm:flex-row">
@@ -60,19 +61,19 @@ export default function Footer() {
                 {/* Social */}
                 <div className="flex items-center gap-3">
                     <a
-                        href="https://github.com/your-username"
+                        href={SOCIAL_LINKS.github}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex h-8 w-8 items-center justify-center rounded-lg border border-white/[0.06] bg-white/[0.02] text-gray-500 transition-colors hover:text-white"
+                        className="flex h-8 w-8 items-center justify-center rounded-lg border border-white/6 bg-white/2 text-gray-500 transition-colors hover:text-white"
                         aria-label="GitHub"
                     >
                         <Github className="h-3.5 w-3.5" />
                     </a>
                     <a
-                        href="https://linkedin.com/in/your-profile"
+                        href={SOCIAL_LINKS.linkedin}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex h-8 w-8 items-center justify-center rounded-lg border border-white/[0.06] bg-white/[0.02] text-gray-500 transition-colors hover:text-white"
+                        className="flex h-8 w-8 items-center justify-center rounded-lg border border-white/6 bg-white/2 text-gray-500 transition-colors hover:text-white"
                         aria-label="LinkedIn"
                     >
                         <Linkedin className="h-3.5 w-3.5" />
