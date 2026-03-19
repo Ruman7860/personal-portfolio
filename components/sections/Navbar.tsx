@@ -73,8 +73,8 @@ export default function Navbar() {
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ duration: 0.6, ease: "easeOut" }}
                 className={`fixed top-0 z-50 w-full transition-all duration-500 ${scrolled
-                        ? "glass shadow-lg shadow-black/20"
-                        : "bg-transparent"
+                    ? "glass shadow-lg shadow-black/20"
+                    : "bg-transparent"
                     }`}
             >
                 <nav className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6 lg:px-8">
@@ -102,9 +102,10 @@ export default function Navbar() {
 
                         {/* CTA */}
                         <a
-                            href="/resume.pdf"
-                            download
-                            className="btn-glow ml-4 inline-flex h-9 items-center gap-2 rounded-lg bg-gradient-to-r from-indigo-500 to-violet-500 px-5 text-sm font-medium text-white transition-all hover:shadow-lg hover:shadow-indigo-500/25"
+                            href="/assets/resume.pdf"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="btn-glow ml-4 inline-flex h-9 items-center gap-2 rounded-lg bg-linear-to-r from-indigo-500 to-violet-500 px-5 text-sm font-medium text-white transition-all hover:shadow-lg hover:shadow-indigo-500/25"
                         >
                             <FileText className="h-3.5 w-3.5" />
                             Resume
@@ -167,8 +168,8 @@ export default function Navbar() {
                                 transition={{ delay: i * 0.06, duration: 0.3 }}
                                 onClick={() => handleNavClick(link.href)}
                                 className={`rounded-xl px-4 py-3 text-lg font-medium transition-colors ${activeSection === link.href.replace("#", "")
-                                        ? "bg-white/5 text-white"
-                                        : "text-gray-400 hover:bg-white/5 hover:text-white"
+                                    ? "bg-white/5 text-white"
+                                    : "text-gray-400 hover:bg-white/5 hover:text-white"
                                     }`}
                             >
                                 {link.label}
