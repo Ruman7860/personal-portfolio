@@ -139,6 +139,10 @@ export default function Hero() {
                     >
                         <motion.a
                             href="#experience"
+                            onClick={(e: any) => {
+                                e.preventDefault();
+                                document.getElementById("experience")?.scrollIntoView({ behavior: "smooth" });
+                            }}
                             whileHover={{ scale: 1.03 }}
                             whileTap={{ scale: 0.97 }}
                             className="btn-glow inline-flex h-12 items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-indigo-500 via-violet-500 to-indigo-600 px-8 text-sm font-semibold text-white shadow-lg shadow-indigo-500/20 transition-shadow hover:shadow-xl hover:shadow-indigo-500/30"
@@ -149,6 +153,10 @@ export default function Hero() {
 
                         <motion.a
                             href="#projects"
+                            onClick={(e: any) => {
+                                e.preventDefault();
+                                document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" });
+                            }}
                             whileHover={{ scale: 1.03 }}
                             whileTap={{ scale: 0.97 }}
                             className="inline-flex h-12 items-center justify-center rounded-xl border border-white/10 bg-white/[0.03] px-8 text-sm font-semibold text-gray-300 transition-all hover:border-white/20 hover:bg-white/[0.06] hover:text-white"

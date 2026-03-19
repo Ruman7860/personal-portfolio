@@ -22,7 +22,14 @@ export default function Footer() {
             <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-6 sm:flex-row">
                 {/* Logo */}
                 <div className="flex flex-col items-center gap-1 sm:items-start">
-                    <a href="#hero" className="text-lg font-bold tracking-tight">
+                    <a 
+                        href="#hero" 
+                        onClick={(e) => {
+                            e.preventDefault();
+                            document.getElementById("hero")?.scrollIntoView({ behavior: "smooth" });
+                        }}
+                        className="text-lg font-bold tracking-tight"
+                    >
                         <span className="gradient-text">Md Ruman</span>
                         <span className="text-white/40">.</span>
                     </a>
@@ -37,6 +44,11 @@ export default function Footer() {
                         <motion.a
                             key={link.href}
                             href={link.href}
+                            onClick={(e: any) => {
+                                e.preventDefault();
+                                const targetId = link.href.replace("#", "");
+                                document.getElementById(targetId)?.scrollIntoView({ behavior: "smooth" });
+                            }}
                             whileHover={{ y: -1 }}
                             className="text-sm text-gray-500 transition-colors hover:text-gray-300"
                         >

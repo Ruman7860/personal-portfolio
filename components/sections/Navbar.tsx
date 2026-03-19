@@ -61,8 +61,14 @@ export default function Navbar() {
         return () => window.removeEventListener("resize", onResize);
     }, []);
 
-    const handleNavClick = useCallback((href: string) => {
-        setActiveSection(href.replace("#", ""));
+    const handleNavClick = useCallback((e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+        e.preventDefault();
+        const targetId = href.replace("#", "");
+        const element = document.getElementById(targetId);
+        if (element) {
+            element.scrollIntoView({ behavior: "smooth" });
+        }
+        setActiveSection(targetId);
         setMobileOpen(false);
     }, []);
 
@@ -82,7 +88,7 @@ export default function Navbar() {
                     <a
                         href="#hero"
                         className="relative text-xl font-bold tracking-tight"
-                        onClick={() => handleNavClick("#hero")}
+                        onClick={(e) => handleNavClick(e, "#hero")}
                     >
                         <span className="gradient-text">Md Ruman</span>
                         <span className="text-white/60">.</span>
@@ -96,7 +102,7 @@ export default function Navbar() {
                                 href={link.href}
                                 label={link.label}
                                 isActive={activeSection === link.href.replace("#", "")}
-                                onClick={() => handleNavClick(link.href)}
+                                onClick={(e) => handleNavClick(e, link.href)}
                             />
                         ))}
 
@@ -166,7 +172,7 @@ export default function Navbar() {
                                 initial={{ opacity: 0, x: 40 }}
                                 animate={{ opacity: 1, x: 0 }}
                                 transition={{ delay: i * 0.06, duration: 0.3 }}
-                                onClick={() => handleNavClick(link.href)}
+                                onClick={(e: any) => handleNavClick(e, link.href)}
                                 className={`rounded-xl px-4 py-3 text-lg font-medium transition-colors ${activeSection === link.href.replace("#", "")
                                     ? "bg-white/5 text-white"
                                     : "text-gray-400 hover:bg-white/5 hover:text-white"
@@ -201,7 +207,7 @@ function NavLink({
     href: string;
     label: string;
     isActive: boolean;
-    onClick: () => void;
+    onClick: (e: React.MouseEvent<HTMLAnchorElement>) => void;
 }) {
     return (
         <a
