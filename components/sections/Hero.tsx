@@ -163,7 +163,7 @@ export default function Hero() {
                         className="mt-12 flex items-center gap-8 text-sm text-gray-500"
                     >
                         <div className="flex flex-col">
-                            <span className="text-xl font-bold text-white">2+</span>
+                            <span className="text-xl font-bold text-white">1+</span>
                             <span>Years Exp.</span>
                         </div>
                         <div className="h-8 w-px bg-white/10" />

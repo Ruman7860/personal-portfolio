@@ -219,7 +219,7 @@ function NavLink({
             {isActive && (
                 <motion.span
                     layoutId="nav-underline"
-                    className="absolute inset-x-3 -bottom-0.5 h-[2px] rounded-full bg-gradient-to-r from-indigo-500 to-cyan-400"
+                    className="absolute inset-x-3 -bottom-0.5 h-[2px] rounded-full bg-linear-to-r from-indigo-500 to-cyan-400"
                     transition={{ type: "spring", stiffness: 400, damping: 30 }}
                 />
             )}
