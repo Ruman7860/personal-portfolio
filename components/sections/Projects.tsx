@@ -11,7 +11,7 @@ interface Project {
     description: string;
     highlights: string[];
     tech: string[];
-    githubUrl: string;
+    githubUrl?: string;
     liveUrl?: string;
     icon: React.ReactNode;
 }
@@ -27,8 +27,7 @@ const projects: Project[] = [
             "Real-time consultation workflows via Socket.io",
         ],
         tech: ["Next.js", "NestJS", "Prisma", "MongoDB", "AWS", "Socket.io"],
-        githubUrl: "#",
-        liveUrl: "#",
+        liveUrl: "https://dev-emr-frontend.vercel.app/",
         icon: <Stethoscope className="h-5 w-5 text-indigo-400" />,
     },
     {
@@ -41,7 +40,7 @@ const projects: Project[] = [
             "Production-ready prompt management",
         ],
         tech: ["Next.js", "NestJS", "Prisma", "OpenAI API", "MongoDB"],
-        githubUrl: "#",
+        githubUrl: "https://github.com/gokuvegita8741/ai-integration-platform",
         icon: <Bot className="h-5 w-5 text-violet-400" />,
     },
     {
@@ -54,7 +53,8 @@ const projects: Project[] = [
             "Cloud-based media management",
         ],
         tech: ["MERN Stack", "Socket.IO", "Cloudinary", "LiveKit"],
-        githubUrl: "#",
+        githubUrl: "https://github.com/Ruman7860/CHAT-APP-MERN",
+        liveUrl: "https://chat-app-mern-frontend-yn0w.onrender.com",
         icon: <MessageCircle className="h-5 w-5 text-cyan-400" />,
     },
     {
@@ -67,7 +67,8 @@ const projects: Project[] = [
             "Cloud image storage & delivery",
         ],
         tech: ["React", "Node.js", "AI APIs", "Cloud Storage"],
-        githubUrl: "#",
+        githubUrl: "https://github.com/Ruman7860/TEXT-IMG-GENERATTION",
+        liveUrl: "https://dev-imagify.onrender.com",
         icon: <Palette className="h-5 w-5 text-emerald-400" />,
     },
 ];
@@ -121,7 +122,7 @@ export default function Projects() {
             >
                 {/* ── Header ── */}
                 <motion.div variants={fadeUp}>
-                    <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-4 py-1.5 font-mono text-xs font-medium tracking-wide text-cyan-300">
+                    <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/3 px-4 py-1.5 font-mono text-xs font-medium tracking-wide text-cyan-300">
                         <Rocket className="h-3 w-3" />
                         Projects
                     </span>
@@ -144,25 +145,27 @@ export default function Projects() {
                             <InteractiveCard as="article" className="flex h-full flex-col">
                                 {/* Header with icon */}
                                 <div className="flex items-start justify-between p-6 pb-0 sm:p-8 sm:pb-0">
-                                    <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-white/[0.06] bg-white/[0.03]">
+                                    <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-white/6 bg-white/3]">
                                         {project.icon}
                                     </div>
                                     <div className="flex gap-2">
-                                        <a
-                                            href={project.githubUrl}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            className="flex h-9 w-9 items-center justify-center rounded-lg border border-white/[0.06] bg-white/[0.02] text-gray-400 transition-colors hover:border-white/15 hover:text-white"
-                                            aria-label="GitHub"
-                                        >
-                                            <Github className="h-4 w-4" />
-                                        </a>
+                                        {project.githubUrl && (
+                                            <a
+                                                href={project.githubUrl}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="flex h-9 w-9 items-center justify-center rounded-lg border border-white/6 bg-white/2 text-gray-400 transition-colors hover:border-white/15 hover:text-white"
+                                                aria-label="GitHub"
+                                            >
+                                                <Github className="h-4 w-4" />
+                                            </a>
+                                        )}
                                         {project.liveUrl && (
                                             <a
                                                 href={project.liveUrl}
                                                 target="_blank"
                                                 rel="noopener noreferrer"
-                                                className="flex h-9 w-9 items-center justify-center rounded-lg border border-white/[0.06] bg-white/[0.02] text-gray-400 transition-colors hover:border-white/15 hover:text-white"
+                                                className="flex h-9 w-9 items-center justify-center rounded-lg border border-white/6 bg-white/2 text-gray-400 transition-colors hover:border-white/15 hover:text-white"
                                                 aria-label="Live Demo"
                                             >
                                                 <ExternalLink className="h-4 w-4" />
@@ -197,12 +200,12 @@ export default function Projects() {
                                     <div className="flex-1" />
 
                                     {/* Divider + Tech */}
-                                    <div className="mt-6 border-t border-white/[0.06] pt-4">
+                                    <div className="mt-6 border-t border-white/6 pt-4">
                                         <div className="flex flex-wrap gap-1.5">
                                             {project.tech.map((t, i) => (
                                                 <span
                                                     key={i}
-                                                    className="rounded-md border border-white/[0.06] bg-white/[0.03] px-2 py-0.5 text-[11px] font-medium text-gray-500 transition-colors hover:text-gray-300"
+                                                    className="rounded-md border border-white/6 bg-white/3 px-2 py-0.5 text-[11px] font-medium text-gray-500 transition-colors hover:text-gray-300"
                                                 >
                                                     {t}
                                                 </span>
