@@ -66,7 +66,7 @@ const projects: Project[] = [
             "External AI API integration",
             "Cloud image storage & delivery",
         ],
-        tech: ["React", "Node.js", "AI APIs", "Cloud Storage"],
+        tech: ["React", "Node.js", "AI APIs", "Cloud Storage","MERN Stack"],
         githubUrl: "https://github.com/Ruman7860/TEXT-IMG-GENERATTION",
         liveUrl: "https://dev-imagify.onrender.com",
         icon: <Palette className="h-5 w-5 text-emerald-400" />,

@@ -16,19 +16,19 @@ interface ContactLink {
 const contactLinks: ContactLink[] = [
     {
         label: "Email",
-        href: "mailto:your.email@example.com",
+        href: "mailto:mdruman4094@gmail.com",
         icon: <Mail className="h-5 w-5" />,
         description: "Drop me a line anytime",
     },
     {
         label: "LinkedIn",
-        href: "https://linkedin.com/in/your-profile",
+        href: "https://www.linkedin.com/in/md-ruman",
         icon: <Linkedin className="h-5 w-5" />,
         description: "Let's connect professionally",
     },
     {
         label: "GitHub",
-        href: "https://github.com/your-username",
+        href: "https://github.com/Ruman7860",
         icon: <Github className="h-5 w-5" />,
         description: "Check out my code",
     },
@@ -110,11 +110,11 @@ export default function Contact() {
                             <InteractiveCard
                                 as="a"
                                 href={link.href}
-                                target={link.label !== "Email" ? "_blank" : undefined}
+                                target="_blank"
                                 rel={link.label !== "Email" ? "noopener noreferrer" : undefined}
                                 className="flex flex-col items-center gap-3 px-6 py-8 text-center"
                             >
-                                <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-white/[0.06] bg-white/[0.03] text-gray-400 transition-colors group-hover:text-white">
+                                <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-white/6 bg-white/3 text-gray-400 transition-colors group-hover:text-white">
                                     {link.icon}
                                 </div>
 
@@ -126,7 +126,7 @@ export default function Contact() {
                 </div>
 
                 {/* CTA */}
-                <motion.div
+                {/* <motion.div
                     variants={fadeUp}
                     className="mt-12 flex justify-center"
                 >
@@ -139,7 +139,7 @@ export default function Contact() {
                         Say Hello
                         <ArrowRight className="h-4 w-4" />
                     </motion.a>
-                </motion.div>
+                </motion.div> */}
             </motion.div>
         </section>
     );
