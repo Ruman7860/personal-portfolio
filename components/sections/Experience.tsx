@@ -109,7 +109,7 @@ export default function Experience() {
             >
                 {/* ── Section Header ── */}
                 <motion.div variants={fadeUp}>
-                    <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-4 py-1.5 font-mono text-xs font-medium tracking-wide text-indigo-300">
+                    <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/3 px-4 py-1.5 font-mono text-xs font-medium tracking-wide text-indigo-300">
                         <Briefcase className="h-3 w-3" />
                         Experience
                     </span>
@@ -222,7 +222,7 @@ function TimelineCard({
                         {experience.metrics.map((metric, i) => (
                             <span
                                 key={i}
-                                className="inline-flex items-center gap-1.5 rounded-lg border border-white/[0.06] bg-white/[0.02] px-3 py-1.5 text-xs font-medium text-gray-300"
+                                className="inline-flex items-center gap-1.5 rounded-lg border border-white/6 bg-white/2 px-3 py-1.5 text-xs font-medium text-gray-300"
                             >
                                 <TrendingUp className="h-3 w-3 text-indigo-400" />
                                 {metric}
@@ -232,14 +232,14 @@ function TimelineCard({
                 )}
 
                 {/* Divider */}
-                <div className="my-6 h-px bg-gradient-to-r from-white/[0.06] via-white/[0.03] to-transparent" />
+                <div className="my-6 h-px bg-linear-to-r from-white/6 via-white/3 to-transparent" />
 
                 {/* Tech Stack */}
                 <div className="flex flex-wrap gap-2">
                     {experience.tech.map((t, i) => (
                         <span
                             key={i}
-                            className="rounded-md border border-white/[0.06] bg-white/[0.03] px-2.5 py-1 text-xs font-medium text-gray-400 transition-colors hover:border-white/10 hover:text-gray-300"
+                            className="rounded-md border border-white/6 bg-white/2 px-2.5 py-1 text-xs font-medium text-gray-400 transition-colors hover:border-white/10 hover:text-gray-300"
                         >
                             {t}
                         </span>

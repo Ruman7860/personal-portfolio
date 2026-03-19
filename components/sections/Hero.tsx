@@ -3,9 +3,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight, ChevronDown } from "lucide-react";
-
-/* ── Rotating Keywords ── */
-const ROTATING_WORDS = ["Scalable", "Performant", "Intelligent", "Beautiful"];
+import { SKILLS, ROTATING_WORDS } from "@/constants/hero-section-constants";
 
 /* ── Animation Variants ── */
 const containerVariants = {
@@ -84,7 +82,7 @@ export default function Hero() {
                 >
                     {/* Badge */}
                     <motion.div variants={fadeUp}>
-                        <span className="animate-reveal inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-4 py-1.5 font-[family-name:var(--font-mono)] text-xs font-medium tracking-wide text-indigo-300">
+                        <span className="animate-reveal inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/3 px-4 py-1.5 font-mono text-xs font-medium tracking-wide text-indigo-300">
                             <span className="inline-block h-1.5 w-1.5 rounded-full bg-indigo-400 animate-glow-pulse" />
                             Full-Stack Developer
                         </span>
@@ -145,7 +143,7 @@ export default function Hero() {
                             }}
                             whileHover={{ scale: 1.03 }}
                             whileTap={{ scale: 0.97 }}
-                            className="btn-glow inline-flex h-12 items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-indigo-500 via-violet-500 to-indigo-600 px-8 text-sm font-semibold text-white shadow-lg shadow-indigo-500/20 transition-shadow hover:shadow-xl hover:shadow-indigo-500/30"
+                            className="btn-glow inline-flex h-12 items-center justify-center gap-2 rounded-xl bg-linear-to-r from-indigo-500 via-violet-500 to-indigo-600 px-8 text-sm font-semibold text-white shadow-lg shadow-indigo-500/20 transition-shadow hover:shadow-xl hover:shadow-indigo-500/30"
                         >
                             View Experience
                             <ArrowRight className="h-4 w-4" />
@@ -159,7 +157,7 @@ export default function Hero() {
                             }}
                             whileHover={{ scale: 1.03 }}
                             whileTap={{ scale: 0.97 }}
-                            className="inline-flex h-12 items-center justify-center rounded-xl border border-white/10 bg-white/[0.03] px-8 text-sm font-semibold text-gray-300 transition-all hover:border-white/20 hover:bg-white/[0.06] hover:text-white"
+                            className="inline-flex h-12 items-center justify-center rounded-xl border border-white/10 bg-white/3 px-8 text-sm font-semibold text-gray-300 transition-all hover:border-white/20 hover:bg-white/6 hover:text-white"
                         >
                             View Projects
                         </motion.a>
@@ -197,46 +195,39 @@ export default function Hero() {
                     {/* Outer ring */}
                     <div className="relative flex h-[420px] w-[420px] items-center justify-center xl:h-[480px] xl:w-[480px]">
                         {/* Rotating ring */}
-                        <div className="absolute inset-0 rounded-full border border-white/[0.06]" />
+                        <div className="absolute inset-0 rounded-full border border-white/6" />
                         <div
-                            className="absolute inset-4 rounded-full border border-white/[0.04]"
+                            className="absolute inset-4 rounded-full border border-white/4"
                             style={{ animation: "spin 30s linear infinite" }}
                         />
-                        <div className="absolute inset-8 rounded-full border border-dashed border-white/[0.05]" />
+                        <div className="absolute inset-8 rounded-full border border-dashed border-white/5" />
 
                         {/* Central glow orb */}
                         <div className="relative flex h-48 w-48 items-center justify-center xl:h-56 xl:w-56">
-                            <div className="absolute inset-0 rounded-full bg-gradient-to-br from-indigo-500/30 via-violet-500/20 to-cyan-500/10 blur-2xl animate-glow-pulse" />
-                            <div className="absolute inset-4 rounded-full bg-gradient-to-br from-indigo-600/20 to-violet-600/10 backdrop-blur-sm" />
-                            <div className="absolute inset-0 rounded-full border border-white/[0.08]" />
+                            <div className="absolute inset-0 rounded-full bg-linear-to-br from-indigo-500/30 via-violet-500/20 to-cyan-500/10 blur-2xl animate-glow-pulse" />
+                            <div className="absolute inset-4 rounded-full bg-linear-to-br from-indigo-600/20 to-violet-600/10 backdrop-blur-sm" />
+                            <div className="absolute inset-0 rounded-full border border-white/8" />
 
                             {/* Code symbol */}
-                            <span className="relative font-[family-name:var(--font-mono)] text-3xl font-bold text-white/80 xl:text-4xl">
+                            <span className="relative font-mono text-3xl font-bold text-white/80 xl:text-4xl">
                                 {"</>"}
                             </span>
                         </div>
 
                         {/* Floating nodes */}
-                        <FloatingNode
-                            label="React"
-                            position="top-4 left-1/2 -translate-x-1/2"
-                            delay={0}
-                        />
-                        <FloatingNode
-                            label="Node.js"
-                            position="bottom-4 left-1/2 -translate-x-1/2"
-                            delay={0.5}
-                        />
-                        <FloatingNode
-                            label="AWS"
-                            position="left-0 top-1/2 -translate-y-1/2"
-                            delay={1}
-                        />
-                        <FloatingNode
-                            label="TypeScript"
-                            position="right-0 top-1/2 -translate-y-1/2"
-                            delay={1.5}
-                        />
+                        {SKILLS.map((skill, index) => {
+                            // Calculate angle to distribute them evenly in a circle (360 degrees)
+                            const angle = (index * 360) / SKILLS.length;
+                            return (
+                                <FloatingNode
+                                    key={skill.label}
+                                    label={skill.label}
+                                    angle={angle}
+                                    radius={skill.radius}
+                                    delay={index * 0.2}
+                                />
+                            );
+                        })}
 
                         {/* Corner accents */}
                         <div className="absolute -right-2 top-1/4 h-2 w-2 rounded-full bg-indigo-400/60 animate-glow-pulse" />
@@ -281,27 +272,39 @@ export default function Hero() {
 /* ── Floating Tech Node ── */
 function FloatingNode({
     label,
-    position,
+    angle,
+    radius,
     delay,
 }: {
     label: string;
-    position: string;
+    angle: number;
+    radius: number;
     delay: number;
 }) {
+    // Calculate x and y position based on the angle and radius
+    const x = Math.cos((angle * Math.PI) / 180) * radius;
+    const y = Math.sin((angle * Math.PI) / 180) * radius;
+
     return (
-        <motion.div
-            animate={{ y: [-4, 4, -4] }}
-            transition={{
-                duration: 3,
-                repeat: Infinity,
-                ease: "easeInOut",
-                delay,
+        <div
+            className="absolute left-1/2 top-1/2"
+            style={{
+                transform: `translate(-50%, -50%) translate(${x}px, ${y}px)`,
             }}
-            className={`absolute ${position}`}
         >
-            <div className="rounded-lg border border-white/10 bg-white/[0.03] px-3 py-1.5 text-xs font-medium text-gray-300 backdrop-blur-sm transition-colors hover:border-white/20 hover:text-white">
-                {label}
-            </div>
-        </motion.div>
+            <motion.div
+                animate={{ y: [-4, 4, -4] }}
+                transition={{
+                    duration: 3,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                    delay,
+                }}
+            >
+                <div className="rounded-lg border border-white/10 bg-white/3 px-3 py-1.5 text-xs font-medium text-gray-300 backdrop-blur-sm transition-colors hover:border-white/20 hover:text-white shadow-lg shadow-black/20">
+                    {label}
+                </div>
+            </motion.div>
+        </div>
     );
 }
