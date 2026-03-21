@@ -44,6 +44,28 @@ const experiences: ExperienceEntry[] = [
         ],
         metrics: ["Multi-tenant", "Production-grade", "1000s of submissions"],
     },
+    {
+    company: "MotionCut Video Studio",
+    role: "Web Development Intern",
+    duration: "Nov 2023 — Dec 2023",
+    badge: "Internship",
+    description:
+        "Completed a 1-month internship focused on web development fundamentals, contributing to building responsive interfaces and strengthening core frontend and problem-solving skills.",
+    highlights: [
+        "Developed responsive web pages using HTML, CSS, and JavaScript with a focus on clean UI/UX",
+        "Collaborated on small-scale projects to understand real-world development workflows",
+        "Strengthened fundamentals of web development including DOM manipulation and layout design",
+        "Demonstrated strong learning ability, dedication, and consistency throughout the internship",
+    ],
+    tech: [
+        "HTML",
+        "CSS",
+        "JavaScript",
+        "UI/UX",
+        
+    ],
+    metrics: ["1 Month Internship", "Frontend Focused"],
+}
 ];
 
 /* ── Animation Variants ── */
