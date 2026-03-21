@@ -4,36 +4,11 @@ import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { Zap, Monitor, Server, Cloud, Wrench } from "lucide-react";
 import InteractiveCard from "@/components/ui/InteractiveCard";
+import { SKILLCATEGORY } from "@/constants/skills-section-constants";
 
 /* ── Skill Categories ── */
-interface SkillCategory {
-    name: string;
-    icon: React.ReactNode;
-    skills: string[];
-}
 
-const skillCategories: SkillCategory[] = [
-    {
-        name: "Frontend",
-        icon: <Monitor className="h-4 w-4 text-indigo-400" />,
-        skills: ["React", "Next.js", "TypeScript", "JavaScript", "HTML", "CSS", "Tailwind CSS"],
-    },
-    {
-        name: "Backend",
-        icon: <Server className="h-4 w-4 text-violet-400" />,
-        skills: ["Node.js", "NestJS", "Express.js", "REST APIs", "GraphQL"],
-    },
-    {
-        name: "Databases & Cloud",
-        icon: <Cloud className="h-4 w-4 text-cyan-400" />,
-        skills: ["MongoDB", "DynamoDB", "SQL", "Prisma ORM", "AWS S3", "AWS Lambda", "AWS SQS"],
-    },
-    {
-        name: "Tools & DevOps",
-        icon: <Wrench className="h-4 w-4 text-emerald-400" />,
-        skills: ["Git", "GitHub", "Postman", "VS Code", "Docker", "CI/CD"],
-    },
-];
+const skillCategories = SKILLCATEGORY;
 
 /* ── Animation Variants ── */
 const sectionVariants = {
